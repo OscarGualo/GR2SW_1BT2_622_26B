@@ -5,41 +5,89 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.JavaWeb</groupId>
-    <artifactId>GR2SW_1BT2_622_26B</artifactId>
+    <artifactId>GR2S2_1BT2_622_26B</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>GR2S2_1BT2_622_26B</name>
     <packaging>war</packaging>
 
     <properties>
+        <maven.compiler.release>24</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.target>24</maven.compiler.target>
-        <maven.compiler.source>24</maven.compiler.source>
-        <junit.version>5.13.2</junit.version>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- Tomcat 9.0.x implementa Servlet 4.0 / JSP 2.3 / JSTL 1.2 (paquetes javax.*) -->
+        <servlet.version>4.0.1</servlet.version>
+        <jsp.version>2.3.3</jsp.version>
+        <jstl-api.version>1.2.7</jstl-api.version>
+        <jstl-impl.version>1.2.6</jstl-impl.version>
+        <hibernate.version>6.6.58.Final</hibernate.version>
+        <mssql-jdbc.version>13.6.0.jre11</mssql-jdbc.version>
+        <junit.version>5.14.4</junit.version>
     </properties>
 
     <dependencies>
+        <!-- Provistas por Tomcat 9 (no se empaquetan en el WAR) -->
         <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-            <version>6.1.0</version>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlet.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>${jsp.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JSTL 1.2 (javax.servlet.jsp.jstl): Tomcat no la incluye, va dentro del WAR -->
+        <dependency>
+            <groupId>jakarta.servlet.jsp.jstl</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+            <version>${jstl-api.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+            <version>${jstl-impl.version}</version>
+        </dependency>
+
+        <!-- Hibernate 6 (JPA 3.1, jakarta.persistence); se empaqueta en el WAR, no depende de Tomcat -->
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+        <!-- Driver JDBC de SQL Server (build para Java 11+) -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>${mssql-jdbc.version}</version>
+        </dependency>
+
+        <!-- Pruebas -->
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
+            <artifactId>junit-jupiter</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
+        <finalName>tareas</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.4</version>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
