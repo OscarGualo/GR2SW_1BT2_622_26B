@@ -2,8 +2,8 @@ package com.javaweb.gr2s2_1bt2_622_26b;
 
 import java.io.*;
 
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
 
 @WebServlet(name = "helloServlet", value = "/hello-servlet")
 public class HelloServlet extends HttpServlet {
