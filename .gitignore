@@ -37,3 +37,24 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Carpetas de asistentes de IA (skills/prompts locales, no forman parte de la app) ###
+.agents/
+.augment/
+.claude/
+.codebuddy/
+.codewhale/
+.continue/
+.cursor/
+.factory/
+.gemini/
+.github/prompts/
+.kilocode/
+.kiro/
+.opencode/
+.qoder/
+.roo/
+.trae/
+.warp/
+.windsurf/
+design-system/
