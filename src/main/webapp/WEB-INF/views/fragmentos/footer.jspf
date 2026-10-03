@@ -1,0 +1,41 @@
+<%@ page pageEncoding="UTF-8" %>
+<%-- Fragmento común: cierre del contenido, pie de página y scripts. --%>
+</main>
+
+<footer class="pie py-3 mt-auto">
+    <div class="container text-center small">
+        Gestor de Tareas · GR2S2 1BT2 · Java Web con Servlets, JSP y JPA
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Botones con estado de carga: evita envíos dobles mientras el servidor responde.
+    document.addEventListener('submit', function (e) {
+        if (e.defaultPrevented) {
+            return; // El usuario canceló la confirmación.
+        }
+        var boton = e.target.querySelector('button[type="submit"]');
+        if (boton) {
+            boton.disabled = true;
+            boton.setAttribute('aria-busy', 'true');
+            boton.insertAdjacentHTML('afterbegin',
+                '<span class="spinner-border spinner-border-sm me-1" aria-hidden="true"></span>');
+        }
+    });
+
+    // Los mensajes de éxito se cierran solos tras unos segundos.
+    document.querySelectorAll('[data-autocerrar]').forEach(function (alerta) {
+        setTimeout(function () {
+            bootstrap.Alert.getOrCreateInstance(alerta).close();
+        }, parseInt(alerta.dataset.autocerrar, 10));
+    });
+
+    // Un resumen de errores recibe el foco para que el lector de pantalla lo anuncie.
+    var resumen = document.getElementById('resumen-error');
+    if (resumen) {
+        resumen.focus();
+    }
+</script>
+</body>
+</html>

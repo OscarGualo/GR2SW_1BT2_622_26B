@@ -1,8 +1,20 @@
-# Tareas — GR2S2_1BT2_622_26B
+# Gestor de Tareas — GR2S2_1BT2_622_26B
 
-Aplicación web Java (WAR) para la gestión de tareas, desplegada en Apache Tomcat 9 y con persistencia en SQL Server mediante Hibernate.
+Aplicación web Java (WAR) para gestionar tareas. Se despliega en Apache Tomcat 9 y guarda los datos en SQL Server mediante Hibernate (JPA).
 
-> Estado actual: proyecto base. Contiene el servlet de ejemplo `HelloServlet` (`/hello-servlet`) y la página de inicio `index.jsp`.
+## Funcionalidades
+
+- **Listado de tareas** con contadores de tareas pendientes y completadas.
+- **Filtros** por estado y prioridad; el filtro activo queda seleccionado y se puede limpiar.
+- **Crear y editar** tareas con el mismo formulario: título, descripción, fecha límite y prioridad.
+- **Completar / reabrir** una tarea. Las completadas se muestran con el texto tachado.
+- **Eliminar** con confirmación previa.
+- **Prioridad con colores:** ALTA en rojo, MEDIA en amarillo y BAJA en verde.
+- **Etiqueta "Vencida"** para las tareas pendientes cuya fecha límite ya pasó.
+- **Validaciones** en el servidor, con el mensaje de error mostrado en el formulario.
+- **Mensajes flash** de éxito o error después de cada operación (patrón Post/Redirect/Get).
+- **Páginas de error amigables** para los errores 404 y 500.
+- **Interfaz responsive** con Bootstrap 5, accesible por teclado.
 
 ## Tecnologías
 
@@ -10,15 +22,45 @@ Aplicación web Java (WAR) para la gestión de tareas, desplegada en Apache Tomc
 |---|---|---|
 | Java (JDK) | 24 | Lenguaje y compilación (`maven.compiler.release`) |
 | Apache Tomcat | 9.0.122 | Servidor de aplicaciones |
-| Servlet API (`javax.servlet`) | 4.0.1 | Servlets (provista por Tomcat) |
+| Servlet API (`javax.servlet`) | 4.0.1 | Servlets y filtros (provista por Tomcat) |
 | JSP API | 2.3.3 | Vistas (provista por Tomcat) |
 | JSTL | 1.2 | Etiquetas en JSP (incluida en el WAR) |
 | Hibernate ORM (`jakarta.persistence`) | 6.6.58.Final | Mapeo objeto-relacional / JPA 3.1 |
 | Microsoft SQL Server + `mssql-jdbc` | 13.6.0.jre11 | Base de datos y driver JDBC |
+| Bootstrap + Bootstrap Icons (CDN) | 5.3.3 / 1.11.3 | Estilos e iconos de la interfaz |
 | Maven (wrapper incluido) | 3.x | Construcción y dependencias |
-| JUnit Jupiter | 5.14.4 | Pruebas unitarias |
+| JUnit Jupiter | 5.14.4 | Pruebas |
 
 > Tomcat 9 solo admite el espacio de nombres `javax.servlet`. No uses `jakarta.servlet.*` en el código.
+> Por la misma razón, la URI de JSTL es `http://java.sun.com/jsp/jstl/core`. Es el equivalente en Tomcat 9 de `jakarta.tags.core`, que solo existe en JSTL 3 / Tomcat 10+.
+> Hibernate 6 sí usa `jakarta.persistence.*`; es correcto porque se incluye dentro del WAR y no depende de Tomcat.
+
+## Arquitectura
+
+La aplicación sigue el patrón **MVC** organizado en capas:
+
+```
+Navegador ──► EncodingFilter (UTF-8)
+                 │
+                 ▼
+          TareaServlet  (/tareas)          Controlador: GET muestra la lista o el formulario, POST guarda/completa/elimina
+                 │
+                 ▼
+          TareaService                      Reglas de negocio y validaciones
+                 │
+                 ▼
+          TareaDAO                          Acceso a datos con EntityManager (persist, merge, find, remove, JPQL)
+                 │
+                 ▼
+          Hibernate / JPA ──► SQL Server   Tabla "tareas" mapeada desde la entidad Tarea
+                 │
+                 ▼
+          JSP + JSTL (WEB-INF/views)        Vistas: lista.jsp, formulario.jsp, error.jsp
+```
+
+- `JPAListener` crea el `EntityManagerFactory` al iniciar la aplicación y lo cierra al detenerla. `JPAUtil` lo pone a disposición del resto del código.
+- Las vistas están dentro de `WEB-INF/views/`, así que solo se puede llegar a ellas a través del servlet.
+- `index.jsp` redirige a `/tareas` con `<c:redirect>`.
 
 ## Requisitos previos
 
@@ -38,30 +80,21 @@ Aplicación web Java (WAR) para la gestión de tareas, desplegada en Apache Tomc
    - En SSMS: clic derecho sobre el servidor → *Propiedades* → *Seguridad* → *Modo de autenticación de SQL Server y Windows*.
    - Reinicia el servicio.
 
-3. **Crear la base de datos y el usuario** (ejecutar en SSMS):
+3. **Ejecutar el script** [`database/script.sql`](database/script.sql) en SSMS. El script:
+   - crea la base de datos `gestion_tareas`;
+   - crea el login y usuario `tareas_user`;
+   - crea la tabla `tareas`;
+   - inserta 10 tareas de ejemplo con fechas relativas a hoy, incluidas algunas vencidas y algunas completadas.
 
-   ```sql
-   CREATE DATABASE tareas;
-   GO
-
-   CREATE LOGIN tareas_user WITH PASSWORD = 'CambiaEstaClave123!';
-   GO
-
-   USE tareas;
-   CREATE USER tareas_user FOR LOGIN tareas_user;
-   ALTER ROLE db_owner ADD MEMBER tareas_user;
-   GO
-   ```
-
-4. **Datos de conexión** que usará la aplicación:
+4. **Datos de conexión** que usa la aplicación (configurados en `src/main/resources/META-INF/persistence.xml`):
 
    ```
-   URL:      jdbc:sqlserver://localhost:1433;databaseName=tareas;encrypt=true;trustServerCertificate=true
+   URL:      jdbc:sqlserver://localhost:1433;databaseName=gestion_tareas;encrypt=true;trustServerCertificate=true
    Usuario:  tareas_user
-   Clave:    CambiaEstaClave123!
+   Clave:    tareas123
    ```
 
-   Cambia la clave por una propia y no subas credenciales reales al repositorio.
+   Son credenciales de desarrollo local. Si las cambias en el script, cámbialas también en `persistence.xml`.
 
 ## Cómo ejecutar
 
@@ -75,7 +108,7 @@ Aplicación web Java (WAR) para la gestión de tareas, desplegada en Apache Tomc
 3. **Run → Edit Configurations… → + → Tomcat Server → Local**:
    - **Server**: selecciona tu Tomcat 9 en *Application server* y tu **JDK 24** en *JRE*.
    - **Deployment**: **+ → Artifact… →** `…:war exploded`; *Application context*: `/tareas`.
-4. Pulsa **▶ Run** y abre <http://localhost:8080/tareas/>.
+4. Pulsa **▶ Run** y abre <http://localhost:8080/tareas/>; serás redirigido a la lista de tareas.
 
 ### Opción B: línea de comandos
 
@@ -96,11 +129,40 @@ Aplicación web Java (WAR) para la gestión de tareas, desplegada en Apache Tomc
 ./mvnw test -Dtest=NombreDeClase
 ```
 
+Las pruebas usan la base de datos real, así que SQL Server debe estar en ejecución con el script ya aplicado. Para compilar sin ejecutar las pruebas usa `./mvnw clean package -DskipTests`.
+
+## Rutas de la aplicación
+
+| Método | URL | Acción |
+|---|---|---|
+| GET | `/tareas` | Lista de tareas (acepta `?estado=` y `?prioridad=`) |
+| GET | `/tareas?accion=nuevo` | Formulario para crear una tarea |
+| GET | `/tareas?accion=editar&id=N` | Formulario para editar una tarea (404 si no existe) |
+| POST | `/tareas` con `accion=guardar` | Crea o actualiza una tarea |
+| POST | `/tareas` con `accion=completar` | Alterna el estado entre pendiente y completada |
+| POST | `/tareas` con `accion=eliminar` | Elimina una tarea |
+
 ## Estructura del proyecto
 
 ```
-src/main/java/com/javaweb/gr2s2_1bt2_622_26b/   Servlets (@WebServlet)
-src/main/webapp/                                JSP y recursos estáticos
-src/main/webapp/WEB-INF/web.xml                 Descriptor Java EE 4.0
-pom.xml                                         Dependencias y build (WAR: tareas)
+src/main/java/com/javaweb/gr2s2_1bt2_622_26b/
+├── controller/TareaServlet.java      Controlador (@WebServlet "/tareas")
+├── service/TareaService.java         Lógica de negocio y validaciones
+├── dao/TareaDAO.java                 Acceso a datos con JPA
+├── model/                            Entidad Tarea y enums Estado, Prioridad
+├── filter/EncodingFilter.java        Filtro UTF-8 (@WebFilter "/*")
+└── util/                             JPAUtil y JPAListener (ciclo de vida del EntityManagerFactory)
+src/main/resources/META-INF/persistence.xml   Unidad de persistencia "tareasPU"
+src/main/webapp/
+├── index.jsp                         Redirige a /tareas
+├── css/estilos.css                   Estilos propios
+└── WEB-INF/
+    ├── web.xml                       Páginas de error 404 / 500
+    └── views/
+        ├── lista.jsp                 Lista, contadores y filtros
+        ├── formulario.jsp            Crear / editar tarea
+        ├── error.jsp                 Página de error amigable
+        └── fragmentos/               header.jspf y footer.jspf
+database/script.sql                   Base de datos, usuario, tabla y datos de ejemplo
+pom.xml                               Dependencias y build (WAR: tareas)
 ```

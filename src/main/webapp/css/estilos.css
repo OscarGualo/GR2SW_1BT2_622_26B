@@ -1,0 +1,710 @@
+/* =====================================================================
+   Gestor de Tareas: estilos propios sobre Bootstrap 5
+   Sistema de diseño generado con la skill ui-ux-pro-max:
+   estilo "Minimalism & Swiss", paleta verde azulado (teal) y
+   tipografía Plus Jakarta Sans.
+   ===================================================================== */
+
+:root {
+    /* Colores semánticos (paleta teal de ui-ux-pro-max).
+       Para los botones se usa un teal más oscuro (#0F766E) porque el blanco
+       sobre #0D9488 no llega al contraste 4.5:1; con #0F766E alcanza 5.5:1. */
+    --color-primario: #0f766e;
+    --color-primario-hover: #115e59;
+    --color-acento: #0d9488;
+    --color-acento-suave: #ccfbf1;
+    --color-fondo: #f0fdfa;
+    --color-superficie: #ffffff;
+    --color-texto: #134e4a;
+    --color-texto-tenue: #475569;
+    --color-borde: #d5ece8;
+    --color-peligro: #b91c1c;
+    --color-anillo: #0d9488;
+
+    /* Escala de espaciado de 4/8 px y forma */
+    --esp-1: .25rem;
+    --esp-2: .5rem;
+    --esp-3: .75rem;
+    --esp-4: 1rem;
+    --esp-6: 1.5rem;
+    --esp-8: 2rem;
+    --radio: 10px;
+    --radio-sm: 6px;
+    --sombra: 0 1px 2px rgba(19, 78, 74, .06);
+    --transicion: 200ms ease;
+
+    /* Bootstrap toma estos valores para sus componentes */
+    --bs-body-font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --bs-body-color: var(--color-texto);
+    --bs-body-bg: var(--color-fondo);
+    --bs-primary: var(--color-primario);
+    --bs-primary-rgb: 15, 118, 110;
+    --bs-link-color: var(--color-primario);
+    --bs-link-color-rgb: 15, 118, 110;
+    --bs-link-hover-color: var(--color-primario-hover);
+    --bs-link-hover-color-rgb: 17, 94, 89;
+    --bs-border-color: var(--color-borde);
+    --bs-secondary-color: var(--color-texto-tenue);
+}
+
+html, body {
+    min-height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    line-height: 1.55;
+    background-color: var(--color-fondo);
+}
+
+h1, h2, h3 {
+    font-weight: 700;
+    letter-spacing: -.01em;
+    text-wrap: balance;
+}
+
+.text-muted {
+    color: var(--color-texto-tenue) !important;
+}
+
+/* ----- Accesibilidad: foco visible y salto al contenido ----- */
+:focus-visible {
+    outline: 3px solid var(--color-anillo);
+    outline-offset: 2px;
+}
+
+.btn:focus-visible,
+.form-control:focus,
+.form-select:focus {
+    box-shadow: 0 0 0 .25rem rgba(13, 148, 136, .3);
+}
+
+.saltar-contenido {
+    position: absolute;
+    top: var(--esp-2);
+    left: var(--esp-2);
+    z-index: 1000;
+    padding: var(--esp-2) var(--esp-4);
+    background: var(--color-superficie);
+    border-radius: var(--radio-sm);
+}
+
+/* ----- Barra de navegación ----- */
+.barra-principal {
+    background-color: var(--color-superficie);
+    border-bottom: 1px solid var(--color-borde);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+.barra-principal nav {
+    min-height: 4rem;
+}
+
+.marca {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--esp-2);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-texto);
+    text-decoration: none;
+}
+
+.marca-icono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--radio-sm);
+    background-color: var(--color-primario);
+    color: #fff;
+}
+
+.nav-principal {
+    display: flex;
+    gap: var(--esp-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav-principal a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--esp-2);
+    min-height: 2.75rem;
+    padding: 0 var(--esp-3);
+    border-radius: var(--radio-sm);
+    color: var(--color-texto-tenue);
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color var(--transicion), color var(--transicion);
+}
+
+.nav-principal a:hover {
+    color: var(--color-texto);
+    background-color: var(--color-acento-suave);
+}
+
+/* Enlace de la página actual */
+.nav-principal a.activo {
+    color: var(--color-primario);
+    background-color: var(--color-acento-suave);
+    font-weight: 600;
+}
+
+/* ----- Botones ----- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--esp-2);
+    min-height: 2.75rem;
+    padding-inline: var(--esp-4);
+    border-radius: var(--radio-sm);
+    font-weight: 600;
+    transition: background-color var(--transicion), border-color var(--transicion), color var(--transicion);
+}
+
+.btn-primary {
+    --bs-btn-bg: var(--color-primario);
+    --bs-btn-border-color: var(--color-primario);
+    --bs-btn-hover-bg: var(--color-primario-hover);
+    --bs-btn-hover-border-color: var(--color-primario-hover);
+    --bs-btn-active-bg: var(--color-primario-hover);
+    --bs-btn-active-border-color: var(--color-primario-hover);
+    --bs-btn-disabled-bg: var(--color-primario);
+    --bs-btn-disabled-border-color: var(--color-primario);
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--color-primario);
+    --bs-btn-border-color: var(--color-primario);
+    --bs-btn-hover-bg: var(--color-primario);
+    --bs-btn-hover-border-color: var(--color-primario);
+    --bs-btn-active-bg: var(--color-primario-hover);
+}
+
+.btn-link {
+    color: var(--color-texto-tenue);
+    text-decoration: none;
+}
+
+.btn-link:hover {
+    color: var(--color-primario);
+}
+
+/* ----- Encabezado de página ----- */
+.encabezado-pagina {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--esp-4);
+    margin-bottom: var(--esp-6);
+}
+
+.encabezado-pagina h1 {
+    font-size: 1.75rem;
+    margin: 0;
+}
+
+.encabezado-pagina p {
+    margin: 0;
+    color: var(--color-texto-tenue);
+}
+
+/* ----- Tarjetas ----- */
+.tarjeta {
+    background-color: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+    box-shadow: var(--sombra);
+}
+
+.contador {
+    display: flex;
+    align-items: center;
+    gap: var(--esp-4);
+    height: 100%;
+    padding: var(--esp-4) var(--esp-6);
+}
+
+.contador-icono {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radio);
+    font-size: 1.35rem;
+}
+
+.contador-pendientes .contador-icono {
+    color: #9a3412;
+    background-color: #ffedd5;
+}
+
+.contador-completadas .contador-icono {
+    color: var(--color-primario);
+    background-color: var(--color-acento-suave);
+}
+
+.contador-numero {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.contador-etiqueta {
+    margin: var(--esp-1) 0 0;
+    font-size: .875rem;
+    font-weight: 500;
+    color: var(--color-texto-tenue);
+}
+
+/* ----- Filtros ----- */
+.filtros {
+    padding: var(--esp-4) var(--esp-6);
+}
+
+.form-label {
+    font-weight: 600;
+    font-size: .9rem;
+    margin-bottom: var(--esp-2);
+}
+
+.form-control,
+.form-select {
+    min-height: 2.75rem;
+    border-radius: var(--radio-sm);
+    font-size: 1rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--color-acento);
+}
+
+.filtros-activos {
+    margin: var(--esp-3) 0 0;
+    font-size: .875rem;
+    color: var(--color-texto-tenue);
+}
+
+/* ----- Etiquetas (badges) ----- */
+.etiqueta {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    padding: .2rem .65rem;
+    border-radius: 999px;
+    font-size: .8rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.etiqueta .punto {
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    background-color: currentColor;
+}
+
+/* Prioridad: ALTA rojo, MEDIA amarillo, BAJA verde (texto + color, contraste ≥ 4.5:1) */
+.prioridad-alta  { color: #991b1b; background-color: #fee2e2; }
+.prioridad-media { color: #854d0e; background-color: #fef9c3; }
+.prioridad-baja  { color: #166534; background-color: #dcfce7; }
+
+/* Estado: neutro para no confundirse con los colores de prioridad */
+.estado-pendiente {
+    color: var(--color-texto-tenue);
+    background-color: #f1f5f9;
+}
+
+.estado-completada {
+    color: var(--color-primario);
+    background-color: var(--color-acento-suave);
+}
+
+.etiqueta-vencida {
+    margin-left: var(--esp-1);
+    color: var(--color-peligro);
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+}
+
+/* ----- Tabla ----- */
+.tabla-tareas {
+    overflow: hidden;
+}
+
+.tabla-tareas .table {
+    --bs-table-bg: transparent;
+    --bs-table-hover-bg: #f7fdfc;
+}
+
+.tabla-tareas thead th {
+    background-color: #f8fafb;
+    color: var(--color-texto-tenue);
+    font-size: .75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    padding: var(--esp-3) var(--esp-4);
+    white-space: nowrap;
+}
+
+.tabla-tareas td {
+    padding: var(--esp-4);
+    border-color: var(--color-borde);
+}
+
+.tabla-tareas tbody tr {
+    transition: background-color var(--transicion);
+}
+
+.tabla-tareas tbody tr:hover {
+    background-color: #f7fdfc;
+}
+
+.tabla-tareas .titulo {
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.tabla-tareas .descripcion {
+    max-width: 22rem;
+    color: var(--color-texto-tenue);
+    overflow-wrap: anywhere;
+}
+
+.tabla-tareas .fecha {
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.tabla-tareas .fecha .bi-calendar3 {
+    color: var(--color-texto-tenue);
+}
+
+/* Tareas completadas: texto tachado y atenuado */
+.tarea-completada td.texto {
+    text-decoration: line-through;
+    text-decoration-color: rgba(71, 85, 105, .6);
+    color: #64748b;
+}
+
+/* Acciones de cada fila */
+.acciones {
+    white-space: nowrap;
+    text-align: right;
+}
+
+.acciones form {
+    display: inline;
+}
+
+.btn-accion {
+    min-height: 2.5rem;
+    padding-inline: var(--esp-3);
+    font-size: .875rem;
+    color: var(--color-texto-tenue);
+    background-color: transparent;
+    border: 1px solid var(--color-borde);
+}
+
+.btn-accion:hover {
+    color: var(--color-primario);
+    border-color: var(--color-acento);
+    background-color: var(--color-acento-suave);
+}
+
+.btn-accion-exito:hover {
+    color: #166534;
+    border-color: #86efac;
+    background-color: #dcfce7;
+}
+
+/* Acción destructiva separada visualmente y en rojo */
+.btn-accion-peligro {
+    margin-left: var(--esp-2);
+}
+
+.btn-accion-peligro:hover {
+    color: var(--color-peligro);
+    border-color: #fca5a5;
+    background-color: #fef2f2;
+}
+
+/* En pantallas medianas los botones muestran solo el icono */
+@media (max-width: 1199.98px) {
+    .btn-accion span {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
+
+    .btn-accion {
+        min-width: 2.5rem;
+        padding-inline: 0;
+    }
+}
+
+/* Móvil: cada fila de la tabla se convierte en una tarjeta */
+@media (max-width: 767.98px) {
+    .tabla-tareas {
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+    }
+
+    .tabla-tareas thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
+
+    .tabla-tareas table,
+    .tabla-tareas tbody,
+    .tabla-tareas tr,
+    .tabla-tareas td {
+        display: block;
+        width: 100%;
+    }
+
+    .tabla-tareas tr {
+        margin-bottom: var(--esp-3);
+        padding: var(--esp-2) 0;
+        background-color: var(--color-superficie);
+        border: 1px solid var(--color-borde);
+        border-radius: var(--radio);
+    }
+
+    .tabla-tareas td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--esp-4);
+        padding: var(--esp-2) var(--esp-4);
+        border: 0;
+        text-align: right;
+    }
+
+    .tabla-tareas td::before {
+        content: attr(data-label);
+        flex-shrink: 0;
+        font-size: .75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .05em;
+        color: var(--color-texto-tenue);
+        text-align: left;
+    }
+
+    .tabla-tareas td.titulo {
+        font-size: 1.05rem;
+    }
+
+    .tabla-tareas .descripcion {
+        max-width: none;
+    }
+
+    .tabla-tareas .fecha {
+        white-space: normal;
+    }
+
+    .tabla-tareas td.acciones {
+        justify-content: flex-end;
+        gap: var(--esp-2);
+        margin-top: var(--esp-2);
+        padding-top: var(--esp-3);
+        border-top: 1px solid var(--color-borde);
+    }
+
+    .tabla-tareas td.acciones::before {
+        content: none;
+    }
+
+    .btn-accion {
+        min-width: 2.75rem;
+        min-height: 2.75rem;
+    }
+
+    .btn-accion-peligro {
+        margin-left: 0;
+    }
+}
+
+/* ----- Estado vacío ----- */
+.estado-vacio,
+.pagina-error {
+    padding: var(--esp-8) var(--esp-6);
+    text-align: center;
+}
+
+.estado-vacio-icono,
+.pagina-error-icono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    font-size: 2rem;
+    color: var(--color-primario);
+    background-color: var(--color-acento-suave);
+}
+
+.estado-vacio h2 {
+    font-size: 1.25rem;
+    margin: var(--esp-4) 0 var(--esp-2);
+}
+
+.estado-vacio p,
+.pagina-error p {
+    max-width: 28rem;
+    margin: 0 auto var(--esp-6);
+    color: var(--color-texto-tenue);
+}
+
+/* ----- Página de error ----- */
+.pagina-error h1 {
+    font-size: 1.5rem;
+    margin-bottom: var(--esp-2);
+}
+
+.pagina-error .pagina-error-codigo {
+    margin: var(--esp-3) 0 0;
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--color-primario);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ----- Formulario ----- */
+.breadcrumb {
+    --bs-breadcrumb-divider-color: var(--color-texto-tenue);
+    --bs-breadcrumb-item-active-color: var(--color-texto-tenue);
+    font-size: .9rem;
+}
+
+.formulario-tarea {
+    padding: var(--esp-6);
+}
+
+@media (min-width: 576px) {
+    .formulario-tarea {
+        padding: var(--esp-8);
+    }
+}
+
+.encabezado-formulario {
+    display: flex;
+    align-items: center;
+    gap: var(--esp-4);
+    margin-bottom: var(--esp-6);
+}
+
+.encabezado-formulario h1 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.encabezado-formulario p {
+    margin: 0;
+    font-size: .875rem;
+    color: var(--color-texto-tenue);
+}
+
+.encabezado-icono {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radio);
+    font-size: 1.35rem;
+    color: var(--color-primario);
+    background-color: var(--color-acento-suave);
+}
+
+.obligatorio {
+    color: var(--color-peligro);
+}
+
+.resumen-error:focus {
+    outline: 3px solid var(--color-peligro);
+    outline-offset: 2px;
+}
+
+.acciones-formulario {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--esp-3);
+    padding-top: var(--esp-6);
+    border-top: 1px solid var(--color-borde);
+}
+
+@media (max-width: 575.98px) {
+    .acciones-formulario {
+        flex-direction: column-reverse;
+    }
+}
+
+/* ----- Mensajes flash ----- */
+.alerta-flash {
+    display: flex;
+    align-items: center;
+    gap: var(--esp-2);
+    border-radius: var(--radio);
+}
+
+/* ----- Pie ----- */
+.pie {
+    color: var(--color-texto-tenue);
+    border-top: 1px solid var(--color-borde);
+    background-color: var(--color-superficie);
+}
+
+/* ----- Movimiento reducido ----- */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+        animation: none !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ----- Navegación en móvil: solo iconos (el texto queda para lectores de pantalla) ----- */
+@media (max-width: 575.98px) {
+    .nav-principal span {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
+
+    .nav-principal a {
+        min-width: 2.75rem;
+        justify-content: center;
+        padding: 0;
+    }
+}
