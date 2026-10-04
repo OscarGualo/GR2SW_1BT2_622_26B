@@ -1,25 +1,29 @@
 /* =====================================================================
    Gestor de Tareas: estilos propios sobre Bootstrap 5
-   Sistema de diseño generado con la skill ui-ux-pro-max:
-   estilo "Minimalism & Swiss", paleta verde azulado (teal) y
-   tipografía Plus Jakarta Sans.
+   Paleta institucional de la Escuela Politécnica Nacional (EPN):
+   azul marino, rojo y dorado del escudo, con tipografía Plus Jakarta Sans.
    ===================================================================== */
 
 :root {
-    /* Colores semánticos (paleta teal de ui-ux-pro-max).
-       Para los botones se usa un teal más oscuro (#0F766E) porque el blanco
-       sobre #0D9488 no llega al contraste 4.5:1; con #0F766E alcanza 5.5:1. */
-    --color-primario: #0f766e;
-    --color-primario-hover: #115e59;
-    --color-acento: #0d9488;
-    --color-acento-suave: #ccfbf1;
-    --color-fondo: #f0fdfa;
+    /* Colores institucionales EPN (tomados del escudo) */
+    --color-azul-epn: #1f2a5c;    /* azul marino del escudo */
+    --color-rojo-epn: #d6232a;    /* franja roja superior */
+    --color-dorado-epn: #f2b134;  /* engranaje dorado */
+    --color-dorado-suave: #fdf3dc;
+
+    /* Colores semánticos.
+       El blanco sobre #1F2A5C tiene un contraste de 13:1, muy por encima del 4.5:1 mínimo. */
+    --color-primario: var(--color-azul-epn);
+    --color-primario-hover: #151d42;
+    --color-acento: #3a5ba0;
+    --color-acento-suave: #e6ebf5;
+    --color-fondo: #f5f7fb;
     --color-superficie: #ffffff;
-    --color-texto: #134e4a;
+    --color-texto: #1a2346;
     --color-texto-tenue: #475569;
-    --color-borde: #d5ece8;
+    --color-borde: #dbe2ee;
     --color-peligro: #b91c1c;
-    --color-anillo: #0d9488;
+    --color-anillo: #3a5ba0;
 
     /* Escala de espaciado de 4/8 px y forma */
     --esp-1: .25rem;
@@ -30,7 +34,7 @@
     --esp-8: 2rem;
     --radio: 10px;
     --radio-sm: 6px;
-    --sombra: 0 1px 2px rgba(19, 78, 74, .06);
+    --sombra: 0 1px 2px rgba(31, 42, 92, .06);
     --transicion: 200ms ease;
 
     /* Bootstrap toma estos valores para sus componentes */
@@ -38,11 +42,11 @@
     --bs-body-color: var(--color-texto);
     --bs-body-bg: var(--color-fondo);
     --bs-primary: var(--color-primario);
-    --bs-primary-rgb: 15, 118, 110;
+    --bs-primary-rgb: 31, 42, 92;
     --bs-link-color: var(--color-primario);
-    --bs-link-color-rgb: 15, 118, 110;
+    --bs-link-color-rgb: 31, 42, 92;
     --bs-link-hover-color: var(--color-primario-hover);
-    --bs-link-hover-color-rgb: 17, 94, 89;
+    --bs-link-hover-color-rgb: 21, 29, 66;
     --bs-border-color: var(--color-borde);
     --bs-secondary-color: var(--color-texto-tenue);
 }
@@ -78,7 +82,7 @@ h1, h2, h3 {
 .btn:focus-visible,
 .form-control:focus,
 .form-select:focus {
-    box-shadow: 0 0 0 .25rem rgba(13, 148, 136, .3);
+    box-shadow: 0 0 0 .25rem rgba(58, 91, 160, .3);
 }
 
 .saltar-contenido {
@@ -92,8 +96,10 @@ h1, h2, h3 {
 }
 
 /* ----- Barra de navegación ----- */
+/* La franja roja superior evoca la banda roja del escudo de la EPN */
 .barra-principal {
     background-color: var(--color-superficie);
+    border-top: 4px solid var(--color-rojo-epn);
     border-bottom: 1px solid var(--color-borde);
     position: sticky;
     top: 0;
@@ -114,6 +120,7 @@ h1, h2, h3 {
     text-decoration: none;
 }
 
+/* Icono de la marca: dorado sobre azul, como el engranaje del escudo */
 .marca-icono {
     display: inline-flex;
     align-items: center;
@@ -121,8 +128,8 @@ h1, h2, h3 {
     width: 2.25rem;
     height: 2.25rem;
     border-radius: var(--radio-sm);
-    background-color: var(--color-primario);
-    color: #fff;
+    background-color: var(--color-azul-epn);
+    color: var(--color-dorado-epn);
 }
 
 .nav-principal {
@@ -246,9 +253,10 @@ h1, h2, h3 {
     font-size: 1.35rem;
 }
 
+/* Pendientes en dorado EPN; el texto oscuro mantiene un contraste mayor a 4.5:1 */
 .contador-pendientes .contador-icono {
-    color: #9a3412;
-    background-color: #ffedd5;
+    color: #8a5a00;
+    background-color: var(--color-dorado-suave);
 }
 
 .contador-completadas .contador-icono {
@@ -319,20 +327,23 @@ h1, h2, h3 {
     background-color: currentColor;
 }
 
-/* Prioridad: ALTA rojo, MEDIA amarillo, BAJA verde (texto + color, contraste ≥ 4.5:1) */
+/* Prioridad: se mantienen rojo, amarillo y verde porque son colores de semáforo
+   que el usuario reconoce al instante (texto + color, contraste ≥ 4.5:1) */
 .prioridad-alta  { color: #991b1b; background-color: #fee2e2; }
 .prioridad-media { color: #854d0e; background-color: #fef9c3; }
 .prioridad-baja  { color: #166534; background-color: #dcfce7; }
 
 /* Estado: neutro para no confundirse con los colores de prioridad */
 .estado-pendiente {
-    color: var(--color-texto-tenue);
-    background-color: #f1f5f9;
+    color: #8a5a00;
+    background-color: #ffffff;
+    border: 1px solid var(--color-dorado-epn);
 }
 
 .estado-completada {
-    color: var(--color-primario);
-    background-color: var(--color-acento-suave);
+    color: #ffffff;
+    background-color: var(--color-azul-epn);
+    border: 1px solid var(--color-azul-epn);
 }
 
 .etiqueta-vencida {
@@ -349,11 +360,11 @@ h1, h2, h3 {
 
 .tabla-tareas .table {
     --bs-table-bg: transparent;
-    --bs-table-hover-bg: #f7fdfc;
+    --bs-table-hover-bg: #f2f5fb;
 }
 
 .tabla-tareas thead th {
-    background-color: #f8fafb;
+    background-color: #f6f8fc;
     color: var(--color-texto-tenue);
     font-size: .75rem;
     font-weight: 700;
@@ -373,7 +384,7 @@ h1, h2, h3 {
 }
 
 .tabla-tareas tbody tr:hover {
-    background-color: #f7fdfc;
+    background-color: #f2f5fb;
 }
 
 .tabla-tareas .titulo {
@@ -591,7 +602,7 @@ h1, h2, h3 {
     font-size: 3rem;
     font-weight: 700;
     line-height: 1.1;
-    color: var(--color-primario);
+    color: var(--color-rojo-epn);
     font-variant-numeric: tabular-nums;
 }
 
@@ -675,9 +686,10 @@ h1, h2, h3 {
 }
 
 /* ----- Pie ----- */
+/* Línea dorada superior, como el engranaje del escudo */
 .pie {
     color: var(--color-texto-tenue);
-    border-top: 1px solid var(--color-borde);
+    border-top: 3px solid var(--color-dorado-epn);
     background-color: var(--color-superficie);
 }
 
